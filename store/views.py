@@ -1,12 +1,15 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
+from .models import *
 
-def home(request):
-    
-    return render(request,"store/home.html")
+
+
 
 def store(request):
-    return render(request,"store/store.html")
+    products=Product.objects.all()
+    context = {
+        'products':products
+    }
+    return render(request,"store/store.html",context)
 
 def cart(request):
     return render(request,"store/cart.html")
