@@ -7,7 +7,7 @@ for(var i=0;i < updateBtns.length;i++){
         console.log('productId:',productId,'action:',action);
  
         console.log("USER:",user)
-        if(user === 'AnonymousUser'){
+        if(user == 'AnonymousUser'){
             addCookieItem(productId,action)
         }
         else{
@@ -38,7 +38,8 @@ function addCookieItem(productId,action){
     }
   }
   console.log('cart:',cart)
-  document.cookie = 'cart=' + json.stringify(cart) + ";domain=;path=/"
+  document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+  location.reload()
 }
 
 function updateUserOrder(productId,action){
