@@ -39,8 +39,10 @@ function addCookieItem(productId,action){
   }
   console.log('cart:',cart)
   document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
-  location.reload()
+  // location.reload()
 }
+
+
 
 function updateUserOrder(productId,action){
     console.log('user is logged in')
@@ -62,7 +64,7 @@ function updateUserOrder(productId,action){
         })
         .then((data) => {
           console.log('data:', data);
-          location.reload()
+          // location.reload()
         })
         .catch((error) => {
           console.error('Error fetching data:', error);

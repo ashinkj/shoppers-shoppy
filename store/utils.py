@@ -1,5 +1,7 @@
 import json
 from .models import *
+from django.conf import settings
+
 
 def cookieCart(request):
     try:
@@ -10,6 +12,7 @@ def cookieCart(request):
     items=[]
     order={'get_cart_total':0,'get_cart_items':0,'shipping':False}
     cartItems=order['get_cart_items']
+    
 
     for i in cart:
         try:
@@ -40,16 +43,20 @@ def cookieCart(request):
     return {'items':items,'order':order,'cartItems':cartItems}
 
 def cartData(request):
+    cartItems = 0 
+    
     if request.user.is_authenticated:
-        customer=request.user.customer
-        order,created=Order.objects.get_or_create(customer=customer,complete=False)
-        items=order.orderitem_set.all()
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
     else:
         cookieData = cookieCart(request)
         cartItems = cookieData['cartItems']
         order = cookieData['order']
         items = cookieData['items']
-    return {'items':items,'order':order,'cartItems':cartItems}
+
+    return {'items': items, 'order': order, 'cartItems': cartItems}
+
 
 
 def guestOrder(request,data):

@@ -7,7 +7,7 @@ from .utils import cookieCart,cartData,guestOrder
 
 def store(request):
     
-    data = cartData(request)
+    data = cookieCart(request)
     cartItems = data['cartItems']
     
     products=Product.objects.all()
@@ -22,11 +22,11 @@ def cart(request):
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
-            
     context = {
         'items':items,'order':order,'cartItems':cartItems
     }
     return render(request,"store/cart.html",context)
+
 
 def checkout(request):
     
@@ -83,7 +83,7 @@ def processOrder(request):
         total = float(data['form']['total'])
         order.transaction_id = transaction_id
 
-        if total == float(order.get_cart_items):
+        if total == float(order.get_cart_total):
             order.complete = True
         order.save()
 

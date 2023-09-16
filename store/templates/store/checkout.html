@@ -43,7 +43,13 @@
         <br>
         <div class="box-element hidden" id="payment-info">
             <small>Paypal Options</small>
-            <button id="make-payment">Make Payment</button>
+            <!-- <button id="make-payment">Make Payment</button> -->
+
+            <button id="rzp-button1">Pay with Razorpay</button>
+            
+
+        </form>
+
         </div>
         
     </div>
@@ -67,6 +73,7 @@
             <h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
         </div>
     </div>
+    
 </div>
 <script type="text/javascript">
     var shipping ='{{order.shipping}}'
@@ -92,10 +99,7 @@
 
     })
 
-    document.getElementById('make-payment').addEventListener('click',function(e){
-         submitFormData()
-
-    })
+  
 
     function submitFormData(){
         console.log('payment button clicked')
