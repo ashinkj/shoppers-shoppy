@@ -10,4 +10,5 @@ Shoppers-Shoppy is a comprehensive e-commerce platform featuring both an intuiti
   <li>javascript </li>
   <li>python</li>
   <li>JSON</li>
+  <li>SQL</li>
 </ul>
