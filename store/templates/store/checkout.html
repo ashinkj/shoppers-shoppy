@@ -90,18 +90,12 @@
     
 </div>
 <script type="text/javascript">
-    var shipping = '{{ order.shipping }}';
+     var shipping = 'True';
     var total = parseFloat("{{ order.get_cart_total }}").toFixed(2);
 
-    if (shipping == 'False') {
-        document.getElementById('shipping-info').innerHTML = '';
-    }
 
     if (user.is_anonymous) {
         document.getElementById('user-info').innerHTML = '';
-    }
-
-    if (shipping == 'False' && user.is_anonymous) {
         document.getElementById('form-wrapper').classList.add('hidden');
         document.getElementById('payment-info').classList.remove('hidden');
     }

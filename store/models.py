@@ -11,13 +11,18 @@ class Customer(models.Model):
 
      
 class Product(models.Model):
-     name=models.CharField(max_length=200,null=True)
+     category=models.CharField(max_length=200,default='Default Category',null=True)
+     brand=models.CharField(max_length=200,null=True)
      price=models.FloatField()
-     digital=models.DecimalField(max_digits=7,decimal_places=2)
+     description=models.TextField()
      image=models.ImageField(null=True,blank=True)
+     image1=models.ImageField(null=True,blank=True,default='default.jpg')
+     image2=models.ImageField(null=True,blank=True,default='default.jpg')
+     image3=models.ImageField(null=True,blank=True,default='default.jpg')
+     image4=models.ImageField(null=True,blank=True,default='default.jpg')
   
      def __str__(self):
-          return self.name
+          return self.category
      
      @property
      def imageURL(self):

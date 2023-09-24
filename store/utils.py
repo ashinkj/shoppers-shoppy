@@ -7,40 +7,44 @@ def cookieCart(request):
     try:
         cart = json.loads(request.COOKIES['cart'])
     except:
-        cart = {}
-    print('cart:', cart)
-    items=[]
-    order={'get_cart_total':0,'get_cart_items':0,'shipping':False}
-    cartItems=order['get_cart_items']
-    
+        cart = {}  
 
-    for i in cart:
+    items = []
+    order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+    for product_id, cart_item in cart.items():
         try:
-            cartItems += cart[i]['quantity']
-
-            product = Product.objects.get(id=i)
-            total = (product.price * cart[i]['quantity'])
-
+            product = Product.objects.get(id=product_id)
+            total = product.price * cart_item['quantity']
+            
+            # Update the order total and cart items count
             order['get_cart_total'] += total
-            order['get_cart_items'] += cart[i]['quantity']
+            order['get_cart_items'] += cart_item['quantity']
 
+            # Create a dictionary for the cart item
             item = {
-                'product':{
-                    'id':product.id,
-                    'name':product.name,
-                    'price':product.price,
-                    'imageURL':product.imageURL,
+                'product': {
+                    'id': product.id,
+                    'category': product.category,
+                    'brand': product.brand,
+                    'price': product.price,
+                    'description': product.description,
+                    'imageURL': product.imageURL,
+                    'image1': product.image1.url if product.image1 else None,
+                    'image2': product.image2.url if product.image2 else None,
+                    'image3': product.image3.url if product.image3 else None,
+                    'image4': product.image4.url if product.image4 else None,
                 },
-                'quantity':cart[i]['quantity'], 
-                'get_total':total,        
+                'quantity': cart_item['quantity'],
+                'get_total': total,
             }
             items.append(item)
+        except Product.DoesNotExist:
+            pass  # Handle the case where a product with the given ID does not exist
 
-            if product.digital == False:
-                order['shipping'] = True
-        except:
-            pass
-    return {'items':items,'order':order,'cartItems':cartItems}
+    return {'items': items, 'order': order, 'cartItems': order['get_cart_items']}
+
+
 
 def cartData(request):
     cartItems = 0 
