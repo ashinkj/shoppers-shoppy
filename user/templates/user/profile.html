@@ -1,0 +1,45 @@
+{% extends "store/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-8 text-center center-div">
+    <div class="img  img-circle mt-5 pb-2">
+      <img src="{{ user.profile.image.url }}" class="rounded-image">
+    </div>
+    <div class="mt-3 mr-5 " >
+      <ul class="thumb-info">
+        <h1>{{ user.username }}</h1>
+        <li class="ml-2"><i class="ti-notepad"></i>{{ user.email }}</li>
+      </ul>
+    </div>
+  </div>
+  <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Profile Info</legend>
+          {{ u_form|crispy }}
+          {{ p_form|crispy }}
+      </fieldset>
+      <div id="shipping-info">
+        <hr>
+        <p>Shipping Information:</p>
+        <hr>
+        <div class="form-field">
+            <input class="form-control" type="text" name="address" placeholder="Address..">
+        </div>
+        <div class="form-field">
+            <input class="form-control" type="text" name="city" placeholder="City..">
+        </div>
+        <div class="form-field">
+            <input class="form-control" type="text" name="state" placeholder="State..">
+        </div>
+        <div class="form-field">
+            <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+        </div>
+        
+    </div>
+      <div class="form-group">
+          <button class="btn box-effect" type="submit">Update</button>
+      </div>
+  </form>
+</div>
+{% endblock content %}

@@ -70,31 +70,46 @@ def updateItem(request):
     return JsonResponse('item was added',safe=False)
 
 def processOrder(request):
-        transaction_id = datetime.datetime.now().timestamp()
-        data = json.loads(request.body)
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
 
-        if request.user.is_authenticated:
-            customer = request.user.customer
-            order, created =Order.objects.get_or_create(customer=customer,complete=False)
-         
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    else:
+        customer, order = guestOrder(request, data)
+
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
+
+    if total == float(order.get_cart_total):
+        order.complete = True
+    order.save()
+
+    if order.shipping:
+        try:
+            # Attempt to retrieve the shipping address for the user
+            shipping_address = ShippingAddress.objects.get(customer=customer)
+        except ShippingAddress.DoesNotExist:
+            # If the shipping address doesn't exist, initialize it as None
+            shipping_address = None
+
+        if shipping_address:
+            # Update the existing shipping address
+            shipping_address.address = data['shipping']['address']
+            shipping_address.city = data['shipping']['city']
+            shipping_address.state = data['shipping']['state']
+            shipping_address.zipcode = data['shipping']['zipcode']
         else:
-           customer,order = guestOrder(request,data)
-
-        total = float(data['form']['total'])
-        order.transaction_id = transaction_id
-
-        if total == float(order.get_cart_total):
-            order.complete = True
-        order.save()
-
-        if order.shipping:
+            # Create a new shipping address
             shipping_address = ShippingAddress(
-            customer=customer,
-            order=order,
-            address=data['shipping']['address'],
-            city=data['shipping']['city'],
-            state=data['shipping']['state'],
-            zipcode=data['shipping']['zipcode'],
-    )
+                customer=customer,
+                order=order,
+                address=data['shipping']['address'],
+                city=data['shipping']['city'],
+                state=data['shipping']['state'],
+                zipcode=data['shipping']['zipcode'],
+            )
+        shipping_address.save()
 
-        return JsonResponse("payment complete",safe=False)
+    return JsonResponse("payment complete", safe=False)
