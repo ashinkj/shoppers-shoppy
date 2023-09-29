@@ -2,56 +2,144 @@
 {% load static %}
 {% block content %}
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="box-element">
 
-            <a  class="btn btn-outline-dark" href="{% url 'store-page' %}">&#x2190; Continue Shopping</a>
-
-            <br>
-            <br>
+  <div class="container">
+    <!-- HERO SECTION-->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
+          <div class="col-lg-6">
+            <h1 class="h2 text-uppercase mb-0">Cart</h1>
+          </div>
+          <div class="col-lg-6 text-lg-right">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb justify-content-lg-end mb-0 px-0">
+                <li class="breadcrumb-item"><a href="{% url 'store-page' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cart</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-5">
+      <h2 class="h5 text-uppercase mb-4">Shopping cart</h2>
+      <div class="row">
+        <div class="col-lg-8 mb-4 mb-lg-0">
+          <!-- CART TABLE-->
+          <div class="table-responsive mb-4">
             <table class="table">
+              <thead class="bg-light">
                 <tr>
-                    <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-                    <th><h5>Total:<strong> ${{order.get_cart_total|floatformat:2}}</strong></h5></th>
-                    <th>
-                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout-page' %}">Checkout</a>
-                    </th>
+                  <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Product</strong></th>
+                  <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Price</strong></th>
+                  <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Quantity</strong></th>
+                  <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Total</strong></th>
+                  <th class="border-0" scope="col"> </th>
                 </tr>
-            </table>
-
-        </div>
-
-        <br>
-        <div class="box-element">
-            <div class="cart-row">
-                <div style="flex:2"></div>
-                <div style="flex:2"><strong>Item</strong></div>
-                <div style="flex:1"><strong>Price</strong></div>
-                <div style="flex:1"><strong>Quantity</strong></div>
-                <div style="flex:1"><strong>Total</strong></div>
-            </div>
-           
-           {% for item in items %}
-            
-         
-             
-            <div class="cart-row">
-                <div style="flex:2"> <img class="row-image" src="{{item.product.imageURL}}"> </div>
-                <div style="flex:2"><p>{{ item.product.name }}</p></div>
-                <div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
-                <div style="flex:1">
-                    <p class="quantity">{{item.quantity}}</p>
-                    <div class="quantity">
-                        <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'store/images/arrow-up.png' %}">
-					
-                        <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'store/images/arrow-down.png' %}">
+              </thead>
+              {% for item in items %}
+              <tbody>
+                <tr>
+                  <th class="pl-0 border-0" scope="row">
+                    <div class="media align-items-center"><a class="reset-anchor d-block animsition-link" href="{{item.product.imageURL}}"><img src="{{item.product.imageURL}}" alt="..." width="70"/></a>
+                      <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html">{{item.product.brand}} {{item.product.category}}</a></strong></div>
                     </div>
-                </div>
-                <div style="flex:1"><p>${{ item.get_total }}</p></div>
+                  </th>
+                  <td class="align-middle border-0">
+                    <p class="mb-0 small">₹{{item.product.price}}</p>
+                  </td>
+                  <td class="align-middle border-0">
+                    <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Quantity</span>
+                        <div class="quantity">
+                            <button class="dec-btn p-0"><i class="fas fa-caret-left chg-quantity update-cart" data-product="{{item.product.id}}" data-action="remove"></i></button>
+                            <input class="form-control border-0 shadow-0 p-0" type="text" value="1">
+                            <button class="inc-btn p-0"><i class="fas fa-caret-right chg-quantity update-cart" data-product="{{item.product.id}}" data-action="add"></i></button>
+                        </div>
+                    </div>
+                  </td>
+                  <td class="align-middle border-0">
+                    <p class="mb-0 small">₹{{ item.get_total }}</p>
+                  </td>
+                  <td class="align-middle border-0"><a class="reset-anchor" href="#"><i class="fas fa-trash-alt small text-muted"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- CART NAV-->
+          <div class="bg-light px-4 py-3">
+            <div class="row align-items-center text-center">
+              <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store-page' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue shopping</a></div>
+              <div class="col-md-6 text-md-right"><a class="btn btn-outline-dark btn-sm" href="{% url 'checkout-page' %}">Procceed to checkout<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
             </div>
-            {% endfor %}
+          </div>
         </div>
+        <!-- ORDER TOTAL-->
+        <div class="col-lg-4">
+          <div class="card border-0 rounded-0 p-lg-4 bg-light">
+            <div class="card-body">
+              <h5 class="text-uppercase mb-4">Cart total</h5>
+              <ul class="list-unstyled mb-0">
+                <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Total Items</strong><span class="text-muted small">{{cartItems}} items</span></li>
+                <li class="border-bottom my-2"></li>
+                <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>₹{{order.get_cart_total|floatformat:2}}</span></li>
+                <li>
+                  <form action="#">
+                    <div class="form-group mb-0">
+                      <input class="form-control" type="text" placeholder="Enter your coupon">
+                      <button class="btn btn-dark btn-sm btn-block" type="submit"> <i class="fas fa-gift mr-2"></i>Apply coupon</button>
+                    </div>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="bg-dark text-white">
+    <div class="container py-4">
+      <div class="row py-5">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h6 class="text-uppercase mb-3">Customer services</h6>
+          <ul class="list-unstyled mb-0">
+            <li><a class="footer-link" href="#">Help &amp; Contact Us</a></li>
+            <li><a class="footer-link" href="#">Returns &amp; Refunds</a></li>
+            <li><a class="footer-link" href="#">Online Stores</a></li>
+            <li><a class="footer-link" href="#">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h6 class="text-uppercase mb-3">Company</h6>
+          <ul class="list-unstyled mb-0">
+            <li><a class="footer-link" href="#">What We Do</a></li>
+            <li><a class="footer-link" href="#">Available Services</a></li>
+            <li><a class="footer-link" href="#">Latest Posts</a></li>
+            <li><a class="footer-link" href="#">FAQs</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-uppercase mb-3">Social media</h6>
+          <ul class="list-unstyled mb-0">
+            <li><a class="footer-link" href="#">Twitter</a></li>
+            <li><a class="footer-link" href="#">Instagram</a></li>
+            <li><a class="footer-link" href="#">Tumblr</a></li>
+            <li><a class="footer-link" href="#">Pinterest</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-top pt-4" style="border-color: #1d1d1d !important">
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="small text-muted mb-0">&copy; 2020 All rights reserved.</p>
+          </div>
+          <div class="col-lg-6 text-lg-right">
+            <p class="small text-muted mb-0">Template designed by <a class="text-white reset-anchor" href="https://bootstraptemple.com/p/bootstrap-ecommerce">Bootstrap Temple</a></p>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </footer>
 {% endblock content %}

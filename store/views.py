@@ -1,21 +1,62 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from django.http import JsonResponse
 from .models import *
 import json
 import datetime
 from .utils import cookieCart,cartData,guestOrder
+from django.views.generic import DetailView
 
 def store(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            productId = data.get('productId')
+            print('productId:', productId)
+
+            if productId is not None:
+                product = Product.objects.get(id=productId)
+                print('productId:', product.brand)
+                response_data = {'product_brand': product.brand,
+                                 'product_category':product.category,
+                                 'product_price':product.price,
+                                 'product_description': product.description,
+                                 'product_image':product.image.url}
+
+                return JsonResponse(response_data, safe=False)
+        
+                data = cartData(request)
+                cartItems = data['cartItems']
+                order = data.get('order', None)
+                items = data.get('items', [])
+
+                products = Product.objects.all()
+                context = {
+                    'products': products,
+                    'cartItems': cartItems,
+                    'items': items,
+                    
+                }
+                
+
+                return render(request, "store/store.html", context)
+            else:
+                return HttpResponse('Missing productId', status=400)
+
+        except json.JSONDecodeError as e:
+            return HttpResponse(str(e), status=400)
+    elif request.method == 'GET':
+        # Handle GET requests here
+        products = Product.objects.all()
+        context = {
+            'products': products,
+        }
+        return render(request, "store/store.html", context)
     
-    data = cookieCart(request)
-    cartItems = data['cartItems']
-    
-    products=Product.objects.all()
-    context = {
-        'products':products,
-        'cartItems':cartItems,
-    }
-    return render(request,"store/store.html",context)
+    # Handle other request methods if needed
+    return HttpResponse('Method Not Allowed', status=405)
+
+class PostDetailView(DetailView):
+    model = Product
 
 def cart(request):
     data = cartData(request)

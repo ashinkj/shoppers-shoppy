@@ -70,7 +70,7 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('your_name')
         password = request.POST.get('your_pass')
-        remember_me = request.POST.get('remember-me')
+        
 
         user = authenticate(request, username=username, password=password)
 
