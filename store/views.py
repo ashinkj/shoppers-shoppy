@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from django.http import JsonResponse
 from .models import *
 import json
@@ -46,17 +46,40 @@ def store(request):
             return HttpResponse(str(e), status=400)
     elif request.method == 'GET':
         # Handle GET requests here
+        data = cartData(request)
+        cartItems = data['cartItems']
         products = Product.objects.all()
         context = {
             'products': products,
+            'cartItems': cartItems,
         }
         return render(request, "store/store.html", context)
     
-    # Handle other request methods if needed
+    
     return HttpResponse('Method Not Allowed', status=405)
 
 class PostDetailView(DetailView):
     model = Product
+    template_name = 'store/product_detail.html'  
+  
+    def post(self, request, *args, **kwargs):
+        product_id = kwargs['pk']
+        review_text = request.POST.get('reviews')  
+
+        if review_text:
+            review = Review.objects.create(
+                product_id=product_id,
+                user=request.user,
+                comment_body=review_text,
+            )
+            
+            return redirect('product-detail', pk=product_id)
+        data = cartData(request)
+        cartItems = data['cartItems']
+        context = self.get_context_data(**kwargs)
+        context['form_error'] = 'Please enter a valid review.'
+        context['cartItems'] = cartItems
+        return self.render_to_response(context)
 
 def cart(request):
     data = cartData(request)
@@ -129,10 +152,9 @@ def processOrder(request):
 
     if order.shipping:
         try:
-            # Attempt to retrieve the shipping address for the user
+            
             shipping_address = ShippingAddress.objects.get(customer=customer)
         except ShippingAddress.DoesNotExist:
-            # If the shipping address doesn't exist, initialize it as None
             shipping_address = None
 
         if shipping_address:

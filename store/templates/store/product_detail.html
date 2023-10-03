@@ -96,53 +96,62 @@
             </div>
             <!-- DETAILS TABS-->
             <ul class="nav nav-tabs border-0" id="myTab" role="tablist">
-              <li class="nav-item"><a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a></li>
-              <li class="nav-item"><a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a></li>
+              <li class="nav-item"><a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="false">Enter Review</a></li>
+              <li class="nav-item"><a class="nav-link active" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="true">Reviews</a></li>
             </ul>
+            
             <div class="tab-content mb-5" id="myTabContent">
-              <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+              {% if user.is_authenticated %}
+              <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
                 <div class="p-4 p-lg-5 bg-white">
-                  <h6 class="text-uppercase">Product description </h6>
-                  <p class="text-muted text-small mb-0">{{ product.description}}</p>
+                  <h6 class="text-uppercase">Enter your Review</h6>
+                  <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="review"><i class="ti-lock"></i></label>
+                      <input type="text" name="reviews" id="review" placeholder="Enter your review...">
+                    </div>
+                    <div class="form-group form-button">
+                      <input type="submit" name="review_submit" id="review_submit" class="form-submit" value="Submit"/>
+                    </div>
+                  </form>
                 </div>
               </div>
-              <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+              {% endif %}
+            
+              <div class="tab-pane fade show active" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                 <div class="p-4 p-lg-5 bg-white">
                   <div class="row">
                     <div class="col-lg-8">
-                      <div class="media mb-3"><img class="rounded-circle" src="img/customer-1.png" alt="" width="50">
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 text-uppercase">Jason Doe</h6>
-                          <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
-                          <ul class="list-inline mb-1 text-xs">
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
-                          </ul>
-                          <p class="text-small mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                      </div>
-                      <div class="media"><img class="rounded-circle" src="img/customer-2.png" alt="" width="50">
-                        <div class="media-body ml-3">
-                          <h6 class="mb-0 text-uppercase">Jason Doe</h6>
-                          <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
-                          <ul class="list-inline mb-1 text-xs">
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                            <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
-                          </ul>
-                          <p class="text-small mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                      </div>
+                      {% if not product.reviews.all %}
+                        <hr>
+                        <p>No Reviews</p>
+                      {% else %}
+                        <hr>
+                        {% for review in product.reviews.all %}
+                          <div class="media mb-3">
+                            <img class="rounded-circle" src="{{ review.user.profile.image.url }}" alt="" width="50">
+                            <div class="media-body ml-3">
+                              <h6 class="mb-0 text-uppercase">{{ review.user }}</h6>
+                              <p class="small text-muted mb-0 text-uppercase">{{ review.date_posted }}</p>
+                              <ul class="list-inline mb-1 text-xs">
+                                <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+                                <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+                                <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+                                <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+                                <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
+                              </ul>
+                              <p class="text-small mb-0 text-muted">{{ review.comment_body }}</p>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      {% endif %}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            
             <!-- RELATED PRODUCTS-->
             <h2 class="h5 text-uppercase mb-4">Related products</h2>
             <div class="row">

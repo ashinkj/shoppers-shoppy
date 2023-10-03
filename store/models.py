@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Customer(models.Model):
      user =models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
@@ -19,7 +20,7 @@ class Product(models.Model):
      image1=models.ImageField(null=True,blank=True,default='default.jpg')
      image2=models.ImageField(null=True,blank=True,default='default.jpg')
      image3=models.ImageField(null=True,blank=True,default='default.jpg')
-     image4=models.ImageField(null=True,blank=True,default='default.jpg')
+
   
      def __str__(self):
           return self.category
@@ -82,3 +83,10 @@ class ShippingAddress(models.Model):
 
      def __str__(self):
           return self.address
+
+
+class Review(models.Model):
+    product = models.ForeignKey("Product", related_name="reviews",on_delete=models.CASCADE,)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted=models.DateTimeField(default=timezone.now)
+    comment_body=models.TextField()
