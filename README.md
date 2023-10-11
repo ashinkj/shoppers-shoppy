@@ -10,7 +10,6 @@ Shoppers-Shoppy is a comprehensive e-commerce platform featuring both an intuiti
   <li>javascript </li>
   <li>python</li>
   <li>Django</li>
-  <li>JSON</li>
   <li>SQL</li>
 </ul>
 
@@ -47,7 +46,7 @@ git clone https://github.com/ashinkj/shoppers-shoppy.git
 
 --> Move into the directory where we have the project files : 
 ```bash
-cd ecommerce
+cd shoppers-shoppy
 
 ```
 
