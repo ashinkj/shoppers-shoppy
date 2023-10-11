@@ -63,12 +63,7 @@ def search_category(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         category = data.get('value')  # Use 'value' as the key to match your JSON data
-
-        # Filter products based on the received category
         products = Product.objects.filter(category=category)
-
-        # You can further customize your response data based on your requirements
-        # Here, we're just serializing the product data for simplicity
         product_data = [{'id':product.id,'brand': product.brand, 'category':product.category,'image':product.image.url, 'price': product.price} for product in products]
 
         response_data = {'message': 'Category received successfully', 'category': category, 'products': product_data}
