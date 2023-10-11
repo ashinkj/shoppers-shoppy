@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Boutique | Ecommerce bootstrap template</title>
+    <title>Shoppers-shoppy | Ecommerce website</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -70,53 +70,6 @@
 </head>
 <body>
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container box_1620"> -->
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <!-- <a class="navbar-brand logo_h" href="{% url 'store-page' %}">Ecomm</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          
-          <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-            <ul class="nav navbar-nav menu_nav justify-content-center">
-              <li class="nav-item active"><a class="nav-link" href="{% url 'store-page' %}">Home</a></li> 
-              <li class="nav-item"><a class="nav-link" href="{% url 'cart-page' %}"><i class="ti-shopping-cart"></i> cart</a></li>
-              
-              {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> 
-              {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li> 
-                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li> 
-              {% endif %}
-              
-          
-
-
-            <form target="_blank" novalidate="true" action=""
-            method="get" class="form-inline">
-            {% csrf_token %}
-            <div class="d-flex flex-row">
-
-              <input class="form-control mr-sm-2" type="search" placeholder="Search Author" aria-label="Search" name="searched">
-
-
-              <button class="click-btn btn btn-primary">search<span class="lnr lnr-arrow-right"></span></button>
-              <div style="position: absolute; left: -5000px;">
-                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-              </div>
-
-              
-            </div>
-            <div class="info"></div>
-          </form>
-          </div> 
-        </div>
-      </nav> -->
-
-       <!-- navbar-->
        <header class="header bg-white">
         <div class="container px-0 px-lg-3">
           <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">Shoppers-shoppy</span></a>
@@ -132,12 +85,11 @@
               </ul>
               <ul class="navbar-nav ml-auto">               
                 <li class="nav-item"><a class="nav-link" href="{% url 'cart-page' %}"> <i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small class="text-gray">({{cartItems}})</small></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"> <i class="far fa-heart mr-1"></i><small class="text-gray"> (0)</small></a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Logout</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login/Register</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Register</a></li> -->
                {% endif %}
               </ul>
             </div>
@@ -170,11 +122,7 @@
    <script src="{% static 'store/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js' %}"></script>
    <script src="{% static 'store/js/front.js' %}"></script>
    <script>
-     // ------------------------------------------------------- //
-     //   Inject SVG Sprite - 
-     //   see more here 
-     //   https://css-tricks.com/ajaxing-svg-sprite/
-     // ------------------------------------------------------ //
+ 
      function injectSvgSprite(path) {
      
          var ajax = new XMLHttpRequest();
@@ -187,14 +135,10 @@
          document.body.insertBefore(div, document.body.childNodes[0]);
          }
      }
-     // this is set to BootstrapTemple website as you cannot 
-     // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
-     // while using file:// protocol
-     // pls don't forget to change to your domain :)
+   
      injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); 
      
    </script>
-   <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
  
 </body>

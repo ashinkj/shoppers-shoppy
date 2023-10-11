@@ -65,10 +65,11 @@
         <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
       </header>
       <div class="row">
-        <div class="col-md-4 mb-4 mb-md-0"><a class="category-item" href="shop.html"><img class="img-fluid" src="{% static 'store/images/amazefit-1.jpg' %}" alt=""><strong class="category-item-title">Watches</strong></a></div>
-        <div class="col-md-4 mb-4 mb-md-0"><a class="category-item mb-4" href="shop.html"><img class="img-fluid" src="{% static 'store/images/aus-1.jpg' %}" alt=""><strong class="category-item-title">Laptops</strong></a></div>
-        <div class="col-md-4"><a class="category-item" href="shop.html"><img class="img-fluid" src="{% static 'store/images/iphone-1.jpg' %}" alt=""><strong class="category-item-title">Mobiles</strong></a></div>
+        <div class="col-md-4 mb-4 mb-md-0"><a class="category-item" data-value="watch" href="#"><img class="img-fluid" src="{% static 'store/images/amazefit-1.jpg' %}" alt=""><strong class="category-item-title">Watches</strong></a></div>
+        <div class="col-md-4 mb-4 mb-md-0"><a class="category-item mb-4" data-value="Laptop" href="#"><img class="img-fluid" src="{% static 'store/images/aus-1.jpg' %}" alt=""><strong class="category-item-title">Laptops</strong></a></div>
+        <div class="col-md-4"><a class="category-item" data-value="mobile" href="#"><img class="img-fluid" src="{% static 'store/images/iphone-1.jpg' %}" alt=""><strong class="category-item-title">Mobiles</strong></a></div>
       </div>
+      
     </section>
     <!-- TRENDING PRODUCTS-->
     <section class="py-5">
@@ -79,6 +80,7 @@
       <div class="row">
         <!-- PRODUCT-->
         {% for product in products %} 
+        {% if forloop.counter <= 8 %}
         <div class="col-xl-3 col-lg-4 col-sm-6">
           <div class="product text-center">
             <div class="position-relative mb-3">
@@ -97,8 +99,12 @@
             <p class="small text-muted">₹{{ product.price|floatformat:2 }}</p>
           </div>
         </div>
-        
+        {% endif %}
         {% endfor %}
+        <div id="category-response" class="row">
+         
+        </div>
+        
         <!-- PRODUCT-->
     </section>
     <!-- SERVICES-->
@@ -182,16 +188,225 @@
       <div class="border-top pt-4" style="border-color: #1d1d1d !important">
         <div class="row">
           <div class="col-lg-6">
-            <p class="small text-muted mb-0">&copy; 2020 All rights reserved.</p>
+            <p class="small text-muted mb-0">&copy; 2023 All rights reserved.</p>
           </div>
           <div class="col-lg-6 text-lg-right">
-            <p class="small text-muted mb-0">Template designed by <a class="text-white reset-anchor" href="https://bootstraptemple.com/p/bootstrap-ecommerce">Bootstrap Temple</a></p>
+            <p class="small text-muted mb-0">Template designed by <a class="text-white reset-anchor" href="#">Shoppers-Shoppy</a></p>
           </div>
         </div>
       </div>
     </div>
   </footer>
 
+<script>
+      // Find all elements with the class "category-item" and set up a click event listener
+const categoryItems = document.querySelectorAll(".category-item");
+const categoryResponse = document.getElementById("category-response"); // Get the response container
 
+categoryItems.forEach((item) => {
+  item.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default behavior of the anchor tag
+
+    // Get the value from the "data-value" attribute of the clicked element
+    const valueToSend = this.getAttribute("data-value");
+
+    // Make an AJAX request to the backend
+    fetch("/search_category/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken, // Ensure that 'csrftoken' is defined
+      },
+      body: JSON.stringify({ value: valueToSend }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the backend here
+        console.log("Response from backend:", data);
+
+        // Update the response container with the data
+        categoryResponse.innerHTML = `
+  <h2>Category: ${data.category}</h2>
+  <ul class="row" style="list-style-type: none;"> <!-- Remove list-style -->
+    ${data.products.map((product) => `
+      <li class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="product text-center">
+          <div class="position-relative mb-3">
+            <div class="badge text-white badge-"></div>
+            <a class="d-block" href="/product/${product.id}/"><img class="img-fluid w-100" src="${product.image}" alt="..."></a>
+            <div class="product-overlay">
+              <ul class="mb-0 list-inline">
+                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
+                <!-- <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li> -->
+                <button data-product="${product.id}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                <!-- <button data-product="{{product.id}}" class="btn btn-outline-secondary add-btn try" id="try"><a class="btn btn-sm btn-outline-dark" href="#productView" data-toggle="modal"><i class="fas fa-expand"></i></a></button> -->
+                <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark try" data-product="${product.id}" id="try" href="#productView" data-toggle="modal"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <h6><a class="reset-anchor" href="/product/${product.id}/">${product.brand} ${product.category}</a></h6>
+          <p class="small text-muted">₹${product.price}</p>
+        </div>
+      </li>
+    `).join('')}
+  </ul>
+`;
+
+var updateBtns=document.getElementsByClassName("update-cart")
+
+
+// Get all elements with the class "try"
+var tryButtons = document.getElementsByClassName("try");
+
+// Function to be called when a "try" button is clicked
+function handleTryButtonClick(event) {
+  // You can also access any data attributes or other properties of the clicked element
+  var productId = this.dataset.product;
+
+  // Call your function or perform any action you want here
+  console.log("Button clicked! Product ID:", productId);
+  
+  // Call your function here
+  myValue(productId);
+}
+
+// Add click event listeners to all "try" buttons
+for (var i = 0; i < tryButtons.length; i++) {
+  tryButtons[i].addEventListener("click", handleTryButtonClick);
+}
+
+function myValue(productId) {
+  // Replace the URL with the actual API endpoint URL
+  var url = '/';
+
+  // Create a JSON object to send in the request body
+  var data = { 'productId': productId };
+
+  // Log the data being sent
+  console.log('Data to send:', JSON.stringify(data));
+
+  fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken, // Ensure that 'csrftoken' is defined
+      },
+      body: JSON.stringify(data),
+  })
+  .then((response) => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok. Status code: ' + response.status);
+      }
+      const contentType = response.headers.get('Content-Type');
+      if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Response is not JSON');
+      }
+      return response.json();
+  })
+  .then((data) => {
+    console.log('Response:', data);
+
+    // Insert the received data into the placeholders
+    document.getElementById('productBrandPlaceholder').textContent = data.product_brand;
+    document.getElementById('productCategoryPlaceholder').textContent = data.product_category;
+    document.getElementById('productPricePlaceholder').textContent = data.product_price;
+    document.getElementById('productdescriptionPlaceholder').textContent = data.product_description;
+    var productImageElement = document.getElementById('productImage');
+    productImageElement.style.backgroundImage = `url('${data.product_image}')`;
+
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error);
+    console.error('Error details:', error.message);
+    // Handle the error here (e.g., display an error message)
+ });
+}
+
+
+for(var i=0;i < updateBtns.length;i++){
+    updateBtns[i].addEventListener("click",function(){
+        var productId = this.dataset.product
+        var action =this.dataset.action
+        console.log('productId:',productId,'action:',action);
+ 
+        console.log("USER:",user)
+        if(user == 'AnonymousUser'){
+            addCookieItem(productId,action)
+            
+        }
+        else{
+            updateUserOrder(productId,action)
+            
+        }
+        
+    })
+
+}
+
+function addCookieItem(productId,action){
+  console.log('Not logged in..')
+
+  if (action == 'add'){
+    if(cart[productId]==undefined){
+      cart[productId]={'quantity':1}
+    
+    }
+    else{
+      cart[productId]['quantity'] += 1
+    }
+  }
+  if (action == 'remove'){
+    cart[productId]['quantity'] -= 1
+
+    if (cart[productId]['quantity'] <= 0){
+      console.log('remove item')
+      delete cart[productId]
+    }
+  }
+  console.log('cart:',cart)
+  document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+  // location.reload()
+}
+
+
+
+function updateUserOrder(productId,action){
+    console.log('user is logged in')
+    var url ='/update_item/'
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({ 'productId': productId, 'action': action }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('data:', data);
+          // location.reload()
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+          console.log('Response status:', response.status);
+          console.log('Response text:', response.statusText);
+          return response.text(); // Log the response content
+        });
+      
+}
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+});
+
+     </script>
 
 {% endblock content %}
