@@ -95,7 +95,7 @@ python manage.py runserver
 <p align="center">
   Login-Page
 </p>
-![ecom-register](https://raw.githubusercontent.com/ashinkj/shoppers-shoppy/master/assets/82154916/d2723da1-9fd9-4645-bde0-29bf5e31b3c2.png)
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/70040593-a1fa-4978-abce-f6206e08dc7e">
 
 
 </td> 
@@ -104,7 +104,7 @@ python manage.py runserver
 <p align="center">
   Register-page
 </p>
-![ecom-register](https://github.com/ashinkj/shoppers-shoppy/assets/82154916/d2723da1-9fd9-4645-bde0-29bf5e31b3c2) 
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/5cbde75e-bdb6-4abe-9f45-759c35ae2189">
 </td>
 </tr>
   <tr>
@@ -112,16 +112,33 @@ python manage.py runserver
 &nbsp; 
 <br>
 <p align="center">
-  Login-page
+  Home-page
 </p>
-<img src="">
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/09fbfa5f-0600-4450-8e36-b7d5c7c26504">
 </td> 
 <td width="50%">
 <br>
 <p align="center">
-  Register-page
+  Profile-page
 </p>
-<img src="">  
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/1f74bd13-bf83-4901-baaf-e9d813d6636f">  
+</td>
+</tr>
+ <tr>
+<td width="50%">      
+&nbsp; 
+<br>
+<p align="center">
+  Home-page
+</p>
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/5c24e234-fa73-4ebf-90b1-4035165d10cb">
+</td> 
+<td width="50%">
+<br>
+<p align="center">
+  Profile-page
+</p>
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/e7d9ef6d-425f-458b-a3b5-f3acb7097b04">  
 </td>
 </tr>
 </table>
