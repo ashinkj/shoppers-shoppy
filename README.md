@@ -85,6 +85,43 @@ python manage.py runserver
 > ⚠ Then, the development server will be started at http://127.0.0.1:8000/
 
 #
+### App Preview :
 
+<table width="100%"> 
+<tr>
+<td width="50%">      
+&nbsp; 
+<br>
+<p align="center">
+  Login-Page
+</p>
+![ecom-login](https://github.com/ashinkj/shoppers-shoppy/assets/82154916/adb06731-a342-4a24-9575-ea17fe90169a)
+</td> 
+<td width="50%">
+<br>
+<p align="center">
+  Register-page
+</p>
+![ecom-register](https://github.com/ashinkj/shoppers-shoppy/assets/82154916/d2723da1-9fd9-4645-bde0-29bf5e31b3c2) 
+</td>
+</tr>
+  <tr>
+<td width="50%">      
+&nbsp; 
+<br>
+<p align="center">
+  Login-page
+</p>
+<img src="">
+</td> 
+<td width="50%">
+<br>
+<p align="center">
+  Register-page
+</p>
+<img src="">  
+</td>
+</tr>
+</table>
 
 
