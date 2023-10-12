@@ -95,7 +95,9 @@ python manage.py runserver
 <p align="center">
   Login-Page
 </p>
-![ecom-login](https://github.com/ashinkj/shoppers-shoppy/assets/82154916/adb06731-a342-4a24-9575-ea17fe90169a)
+![ecom-register](https://raw.githubusercontent.com/ashinkj/shoppers-shoppy/master/assets/82154916/d2723da1-9fd9-4645-bde0-29bf5e31b3c2.png)
+
+
 </td> 
 <td width="50%">
 <br>
