@@ -119,9 +119,9 @@ python manage.py runserver
 <td width="50%">
 <br>
 <p align="center">
-  Profile-page
+  Category-Section
 </p>
-<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/1f74bd13-bf83-4901-baaf-e9d813d6636f">  
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/2a59a2b1-ca79-4163-a0a5-1542dc96d68d">  
 </td>
 </tr>
  <tr>
@@ -129,16 +129,50 @@ python manage.py runserver
 &nbsp; 
 <br>
 <p align="center">
-  Home-page
+  Cart-page
 </p>
 <img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/5c24e234-fa73-4ebf-90b1-4035165d10cb">
 </td> 
 <td width="50%">
 <br>
 <p align="center">
-  Profile-page
+  Checkout-page
 </p>
 <img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/e7d9ef6d-425f-458b-a3b5-f3acb7097b04">  
+</td>
+</tr>
+ <tr>
+<td width="50%">      
+&nbsp; 
+<br>
+<p align="center">
+  product detail-page
+</p>
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/e5285839-fd38-4d2e-b549-8ace95b6172f">
+</td> 
+<td width="50%">
+<br>
+<p align="center">
+  Profile-page
+</p>
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/98dca9d2-f50a-48c1-b8a0-227f58698e44">  
+</td>
+</tr>
+ <tr>
+<td width="50%">      
+&nbsp; 
+<br>
+<p align="center">
+  Review write-section
+</p>
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/6973482d-4c1e-49cc-abbe-4c1cad5270b3">
+</td> 
+<td width="50%">
+<br>
+<p align="center">
+ Review-section
+</p>
+<img src="https://github.com/ashinkj/shoppers-shoppy/assets/82154916/aebed711-c012-4539-86c6-2948cb54ecee">  
 </td>
 </tr>
 </table>
