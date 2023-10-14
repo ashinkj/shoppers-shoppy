@@ -78,8 +78,7 @@ def login_view(request):
             login(request, user)
             return redirect('store-page')
         else:
-            error_message = 'Invalid credentials. Please try again.'
-            return render(request, 'login.html', {'error_message': error_message})
+            messages.warning(request, 'Invalid credentials. Please try again.')
 
     return render(request, 'user/login.html')  
 
